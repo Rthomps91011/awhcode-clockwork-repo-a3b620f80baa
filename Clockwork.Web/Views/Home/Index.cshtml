@@ -1,0 +1,55 @@
+﻿
+<script>
+    function UserAction() {
+        var timezoneSelect = document.getElementById("timezone");
+        var selectedTimezone = encodeURI(timezoneSelect.options[timezoneSelect.selectedIndex].value);
+
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var responseData = JSON.parse(this.responseText);
+                var dateTimeObj = new Date(responseData.time);
+                var timeString = FormatTime(dateTimeObj);
+                document.getElementById("output").innerHTML = timeString + ' ' + decodeURI(selectedTimezone);
+            }
+        };
+        var cacheBusterTime = (new Date()).getTime();
+        var url = "http://127.0.0.1:5000/api/currenttime?cachebuster=" + cacheBusterTime;
+
+        if (selectedTimezone) {
+            url += "&timezone=" + selectedTimezone;
+        } 
+
+        xhttp.open("GET", url, true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send();
+
+    }
+    function GetLogs() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("logs").innerHTML = this.responseText;
+            }
+        };
+        var cacheBusterTime = (new Date()).getTime();
+        xhttp.open("GET", "http://127.0.0.1:5000/api/LogDatabase?cachebuster=" + cacheBusterTime, true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send();
+    }
+	
+	    function FormatTime(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        var strTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        return strTime;
+    }
+</script>
+

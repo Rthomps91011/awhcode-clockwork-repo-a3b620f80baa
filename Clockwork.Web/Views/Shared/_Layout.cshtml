@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+
+<title>@ViewBag.Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="styling.css" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+
+<meta charset="utf-8" />
+<style>
+    body, h1 {
+        font-family: "Raleway", sans-serif
+    }
+
+    body, html {
+        height: 100%
+    }
+
+    .bgimg {
+        background-image: url('/images/img_nature.jpg');
+        min-height: 100%;
+        background-position: center;
+        background-size: cover;
+    }
+    #output {
+        font-family: "Raleway", sans-serif;
+        font-size: 20px;
+        text-align: center;
+    }
+
+
+
+    #logs {
+        overflow-y: scroll;
+        max-height: 10em;
+        text-align: center;
+    }
+</style>
+
+<body>
+   
+    <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+        <div class="w3-display-topleft w3-padding-large w3-xlarge">
+            <link rel="shortcut icon" type="image/ico" href="~/images/AWH.ico" />
+        </div>
+        <div class="w3-display-middle">
+            <h1 class="w3-jumbo w3-center">AWH Clockwork Project @ViewData["Version"] on @ViewData["Runtime"]!</h1>
+            <hr class="w3-border-grey" style="margin:auto;width:40%">
+
+            <p class="w3-large w3-center">
+                <button onclick="UserAction()">What time is it?</button>
+            </p>
+            <p class="w3-large w3-center">
+                <select id="timezone" name="timezone">
+                    <option>Eastern Standard Time</option>
+                    <option>Central Standard Time</option>
+                </select>
+            </p>
+
+            <p id="output"></p>
+
+            <p class="w3-large w3-center"><button onclick="GetLogs()">Get the Logs!</button></p>
+
+            <p id="logs"></p>
+            <div></div>
+            <table id="test" style="width:100%;"></table>
+        </div>
+    </div>
+   
+
+    @RenderBody()
+
+</body>
